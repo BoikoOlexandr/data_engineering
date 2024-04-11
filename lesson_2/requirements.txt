@@ -1,0 +1,17 @@
+notebook
+pandas
+numpy
+dask
+pyarrow
+sqlalchemy
+redis
+pytest
+requests
+dask-expr
+aiohttp
+great_expectations
+polars
+matplotlib
+seaborn
+plotly
+#jupyterlab-plotly
