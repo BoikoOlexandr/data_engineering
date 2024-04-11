@@ -1,7 +1,18 @@
 import os
+import shutil
 import time
 import requests
+from dotenv import load_dotenv
 
+load_dotenv()
+
+def create_or_clean_dir(folder_path: str):
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path, ignore_errors=True)
+    try:
+        os.makedirs(folder_path)
+    except FileExistsError:
+        pass
 
 BASE_DIR = os.environ.get("BASE_DIR")
 
@@ -12,8 +23,12 @@ if not BASE_DIR:
 JOB1_PORT = 8081
 JOB2_PORT = 8082
 
+
 RAW_DIR = os.path.join(BASE_DIR, "raw", "sales", "2022-08-09")
 STG_DIR = os.path.join(BASE_DIR, "stg", "sales", "2022-08-09")
+
+create_or_clean_dir(RAW_DIR)
+create_or_clean_dir(STG_DIR)
 
 
 def run_job1():

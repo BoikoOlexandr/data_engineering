@@ -16,7 +16,7 @@ class MainFunctionTestCase(TestCase):
         cls.client = main.app.test_client()
 
 
-    @mock.patch('lesson_02.ht_template.job1.main.save_sales_to_local_disk')
+    @mock.patch('lesson_2.ht_template.job1.main.save_sales_to_local_disk')
     def test_return_400_date_param_missed(
             self,
             get_sales_mock: mock.MagicMock
@@ -34,10 +34,18 @@ class MainFunctionTestCase(TestCase):
 
         self.assertEqual(400, resp.status_code)
 
-    def test_return_400_raw_dir_param_missed(self):
-        pass
+    @mock.patch('lesson_2.ht_template.job1.main.save_sales_to_local_disk')
+    def test_return_400_raw_dir_param_missed(self,get_sales_mock: mock.MagicMock):
+        resp = self.client.post(
+            '/',
+            json={
+                'date': '1970-01-01',
+            },
+        )
 
-    @mock.patch('lesson_02.ht_template.job1.main.save_sales_to_local_disk')
+        self.assertEqual(400, resp.status_code)
+
+    @mock.patch('lesson_2.ht_template.job1.main.save_sales_to_local_disk')
     def test_save_sales_to_local_disk(
             self,
             save_sales_to_local_disk_mock: mock.MagicMock

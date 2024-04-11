@@ -1,10 +1,15 @@
-from lesson_02.ht_template.job1.dal import local_disk, sales_api
+import os
+
+import requests
+
+from lesson_2.ht_template.bin.check_jobs import create_or_clean_dir
+from lesson_2.ht_template.job1.dal import local_disk, sales_api
+
 
 
 def save_sales_to_local_disk(date: str, raw_dir: str) -> None:
-    # TODO: implement me
-    # 1. get data from the API
-    # 2. save data to disk
+    create_or_clean_dir(raw_dir)
+    data = sales_api.get_sales(date=date)
+    local_disk.save_to_disk(json_content=data, path=raw_dir)
 
-    print("\tI'm in get_sales(...) function!")
-    pass
+

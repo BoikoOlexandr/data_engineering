@@ -3,11 +3,14 @@ This file contains the controller that accepts command via HTTP
 and trigger business logic layer
 """
 import os
+
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask import typing as flask_typing
 
-from lesson_02.ht_template.job1.bll.sales_api import save_sales_to_local_disk
+from lesson_2.ht_template.job1.bll.sales_api import save_sales_to_local_disk
 
+load_dotenv()
 
 AUTH_TOKEN = os.environ.get("API_AUTH_TOKEN")
 
@@ -31,13 +34,16 @@ def main() -> flask_typing.ResponseReturnValue:
     }
     """
     input_data: dict = request.json
-    # TODO: implement me
     date = input_data.get('date')
     raw_dir = input_data.get('raw_dir')
 
     if not date:
         return {
             "message": "date parameter missed",
+        }, 400
+    if not raw_dir:
+        return {
+            "message": "raw_dir parameter missed",
         }, 400
 
     save_sales_to_local_disk(date=date, raw_dir=raw_dir)
